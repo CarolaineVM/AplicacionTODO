@@ -1,0 +1,12 @@
+body {
+}
+
+.container-main{
+    padding-top: 20px;
+    background-color: gainsboro;
+}
+
+.container-logo{
+    background-color: #a9d96f;
+    height: 130px;
+}

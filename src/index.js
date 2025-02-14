@@ -1,24 +1,21 @@
 import e from "express";
-import morgan from "morgan";
-import { dirname, join } from 'path';
-import { fileURLToPath } from "url";
+import cors from "cors";
 
 import indexRoutes from './routes/index.js';
 
 const app = e();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-app.set('views', join(__dirname, 'views'));
-app.set('view engine', 'ejs')
+app.use(cors())
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 app.use(e.json());
 app.use(indexRoutes);
-
-app.use(e.static(join(__dirname, 'public')));
-app.use(e.static(join(__dirname, "actions")));
-
-//app.use(e.static(join(__dirname, 'imgs')));
 
 app.listen(3000);
 console.log("El server esta escuchando en el puerto:", 3000);

@@ -1,18 +1,15 @@
 import { Router } from "express";
 const router = Router();
 
-//import EstudiantesController from "../../controllers/estudiantesController.js";
-import { getAllUsuarios, crearUsuario, getUsuario, actualizarUsuario, eliminarUsuario } from "../controllers/index.usuariosController.js"
-import { getAllTareas } from "../controllers/index.tareasController.js";
+import { actualizarTarea, crearTarea, eliminarTarea, getAllTareas, getTarea } from "../controllers/index.tareasController.js";
 
-router.get('/', (req, res) => {  res.render('index', {title: "Aplicación TODOList"}); })
+router.get('/', (req, res) => {  res.render('index', {title: "Aplicación TODOList", pagina: "Home"}); })
 
 router.get('/tasks', getAllTareas)
-router.post('/tasks', crearUsuario)
-router.get('/usuarios/:id', getUsuario)
-router.post('/usuarios', crearUsuario)
-/*router.put('/usuarios/:id', actualizarUsuario)
-router.delete('/usuarios/:id', eliminarUsuario)*/
+router.get('/task/:id', getTarea)
+router.post('/tasks', crearTarea)
+router.put('/task/:id', actualizarTarea)
+router.delete('/task/:id', eliminarTarea)
 
 
 export default router

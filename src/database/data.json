@@ -1,5 +1,16 @@
 {
-  "tareas": [
-
-  ]
+    "tareas": [
+        {
+            "id": 2,
+            "titulo": "Dibujar",
+            "descripcion": "Hay que dibujar unos conejos",
+            "estado": "En curso"
+        },
+        {
+            "id": 3,
+            "titulo": "Jugar",
+            "descripcion": "SJugar",
+            "estado": "En curso"
+        }
+    ]
 }

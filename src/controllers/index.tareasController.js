@@ -19,7 +19,7 @@ export const getTarea = (req, res) => {
 
         const tarea = database.tareas.find( element => element.id === parseInt(id))
 
-        if(!tarea) return res.status(404).json({"msg": `El usuario con el id ${id} no existe`})
+        if(!tarea) return res.status(404).json({"msg": `La tarea no EXISTE`})
 
         res.status(200).json({data: tarea});
 
@@ -32,11 +32,13 @@ export const crearTarea = (req, res) => {
     try{
         const database = JSON.parse(readFileSync(join(__dirname, "/data.json"), "utf-8"));
         //console.log(req)
-        const { titulo, descripción, estado } = req.body;
+        const { titulo, descripcion, estado } = req.body;
 
-        if( !titulo || !descripción || !estado ) return res.status(400).json({"msg": "Campos requeridos"})
+        if( !titulo || !descripcion || !estado ) return res.status(400).json({"msg": "Campos requeridos"})
 
-        database.tareas.push({ id: new Date().getTime(), titulo, descripción, estado });
+        const tareasLength = database.tareas.length;
+ 
+        database.tareas.push({ id: tareasLength+1, titulo, descripcion, estado });
 
         writeFileSync(join(__dirname, "data.json"), JSON.stringify(database), "utf-8")
 
@@ -50,16 +52,16 @@ export const crearTarea = (req, res) => {
 export const actualizarTarea = (req, res) => {
     try{
         const database = JSON.parse(readFileSync(join(__dirname, "/data.json"), "utf-8"));
-        const { titulo, descripción, estado } = req.body;
+        const { titulo, descripcion, estado } = req.body;
         const { id } = req.params;
 
-        const usuario = database.usuarios.find( element => element.id === parseInt(id))
+        const usuario = database.tareas.find( element => element.id === parseInt(id))
         if(!usuario) return res.status(404).json({"msg": `La tarea con el ${id} no existe`})
 
-        const actualizaData = database.usuarios.map( element => element.id === parseInt(id) ? {...element, titulo, descripción, estado} : element);
-        writeFileSync(join(__dirname, "/data.json"), JSON.stringify({usuarios: actualizaData}), "utf-8");
+        const actualizaData = database.tareas.map( element => element.id === parseInt(id) ? {...element, titulo, descripcion, estado} : element);
+        writeFileSync(join(__dirname, "/data.json"), JSON.stringify({tareas: actualizaData}), "utf-8");
         res.status(200).json({data: {
-            id: parseInt(),
+            id: parseInt(id),
             titulo,
         }})
 
@@ -74,13 +76,13 @@ export const eliminarTarea = (req, res) => {
         const database = JSON.parse(readFileSync(join(__dirname, "/data.json"), "utf-8"));
         const { id } = req.params;
 
-        const buscarUsuario = database.usuarios.find(element => element.id === parseInt(id));
-        if(!buscarUsuario) return res.status(404).json({"msg": `El usuario con el id ${id} no existe`})
+        const buscarTarea = database.tareas.find(element => element.id === parseInt(id));
+        if(!buscarTarea) return res.status(404).json({"msg": `La tarea no Existe`})
 
-        const filterData = database.usuarios.filter(element => element.id !== parseInt(id));
-        writeFileSync(join(__dirname, "/data.json"), JSON.stringify({usuarios: filterData}), "utf-8");
+        const filterData = database.tareas.filter(element => element.id !== parseInt(id));
+        writeFileSync(join(__dirname, "/data.json"), JSON.stringify({tareas: filterData}), "utf-8");
 
-        res.status(200).json({"msg": `El usuario con el id a sido eliminado correctamente`});
+        res.status(200).json({"msg": `La tarea se elimino correctamente`});
 
     } catch(error) {
         res.status(500).json({"msg": error.message})

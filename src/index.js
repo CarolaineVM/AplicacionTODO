@@ -16,6 +16,7 @@ app.use(e.json());
 app.use(indexRoutes);
 
 app.use(e.static(join(__dirname, 'public')));
+app.use(e.static(join(__dirname, "actions")));
 
 //app.use(e.static(join(__dirname, 'imgs')));
 
